@@ -27,5 +27,10 @@ h1 {
 
 form {
 	padding-left: 100px;
-	padding-bottom: 50px;
+	padding-bottom: 20px;
+}
+
+progress {
+	margin-left: 140px;
+	margin-bottom: 50px;
 }
