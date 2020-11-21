@@ -1,7 +1,10 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from urllib.parse import parse_qs
 
+import base64
 import hashlib
+import os
+import requests
 
 
 class FileEventHandler(BaseHTTPRequestHandler):
@@ -12,12 +15,17 @@ class FileEventHandler(BaseHTTPRequestHandler):
         content_length = int(self.headers['Content-Length'])
         post_body = self.rfile.read(content_length)
         post = parse_qs(post_body.decode('utf-8'))
-        file_hash = self.generate_file_hash(post['file'][0])
+        filepath = post['file'][0]
+        file_hash = self.generate_file_hash(filepath=filepath)
+        file_valid = self.validate_file_hash(file_hash=file_hash)
 
-        self.wfile.write(file_hash.encode('utf-8'))
+        if not file_valid:
+            os.unlink(filepath)
+
         return
 
-    def generate_file_hash(self, filepath: str):
+    @staticmethod
+    def generate_file_hash(filepath: str) -> str:
         sha256_hash = hashlib.sha256()
         with open(filepath, "rb") as f:
             # Read and update hash string value in blocks of 4K
@@ -25,6 +33,18 @@ class FileEventHandler(BaseHTTPRequestHandler):
                 sha256_hash.update(byte_block)
 
         return sha256_hash.hexdigest()
+
+    @staticmethod
+    def validate_file_hash(file_hash: str) -> bool:
+        credentials = os.getenv("XFE_API_KEY", "") + ":" + os.getenv("XFE_API_PASSWORD", "")
+        headers = {
+            "Authorization": "Basic " + base64.b64encode(credentials.encode('utf-8')).decode('utf-8')
+        }
+        r = requests.get('https://api.xforce.ibmcloud.com/malware/' + file_hash, headers=headers)
+        if r.status_code == 200:
+            return False
+
+        return True
 
 
 def run(server_class=HTTPServer, handler_class=FileEventHandler):
