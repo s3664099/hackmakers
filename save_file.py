@@ -1,22 +1,25 @@
 #!/usr/bin/python3
 
-import cgi, os
-import cgitb; cgitb.enable(format="text")
+import cgi
+import os
+import cgitb
+
+cgitb.enable(format="text")
 
 form = cgi.FieldStorage()
 
-#Get filename here
-filelist = form['filename']
+# Get filename here
+file_list = form['filename']
 message = ""
 
-for fileitem in filelist:
-	if fileitem.filename:
+for file_item in file_list:
+	if file_item.filename:
 
-		#strip leading path from file name to avoid
-		#directory traversal attacks
+		# strip leading path from file name to avoid
+		# directory traversal attacks
 
-		fn = os.path.basename(fileitem.filename.replace("\\", "/" ))
-		open('/tmp/'+fn, 'wb').write(fileitem.file.read())
+		fn = os.path.basename(file_item.filename.replace("\\", "/"))
+		open('/tmp/upload/' + fn, 'wb').write(file_item.file.read())
 		message += '<p>The file "'+fn+'" was uploaded successfully</p>'
 	else:
 		message = '<p>No file was uploaded</p>'
