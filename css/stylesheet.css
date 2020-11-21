@@ -4,19 +4,28 @@ body {
 	background-size: cover;
 }
 
+@font-face {
+	font-family: angel;
+	src: url("../images/Angels.ttf");
+}
+
 div {
 	position: fixed;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	background-color: white;
+	background-color: rgba(255, 255, 255, 0.8);
 	border-radius: 20px;
-	opacity: 0.8;
 }
 
-h1 {	
-	padding-top: 25px;
-	padding-right: 100px;
+h1 {
+	font-family: angel;
+	color: #e7af18;
+	text-shadow: 2px 2px black;	
+	padding: 25px 100px;
+}
+
+form {
 	padding-left: 100px;
-	padding-bottom: 200px;
+	padding-bottom: 50px;
 }
