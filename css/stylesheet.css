@@ -30,7 +30,16 @@ form {
 	padding-bottom: 20px;
 }
 
+input {
+	display: block;
+}
+
+.submit {
+	margin-top: 10px;
+	margin-left: 100px;
+}
+
 progress {
-	margin-left: 140px;
+	margin-left: 170px;
 	margin-bottom: 50px;
 }
