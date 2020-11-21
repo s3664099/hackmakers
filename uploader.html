@@ -3,13 +3,12 @@
     <title>Hackmaker File Uploader</title>
     <meta charset="utf-8">
     <link type="text/css" rel="stylesheet" href="css/stylesheet.css">
-    <!-- <script type="text/javascript" src="js/dynamicForm.js"></script> --> 
   </head>
   <body>
   	<div>
 	  <h1>Hackmakers</h1>
-	  <form action="">
-	  	<input type="file" id="file-upload" multiple>
+	  <form enctype = "multipart/form-data" action = "save_file.py" method = "post">
+	  	<input type="file" id="file-upload">
 	  	<input class="submit" type="submit" value="upload">
 	  </form>
 	  <progress value="100" max="100"></progress>
