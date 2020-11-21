@@ -1,0 +1,22 @@
+
+body {
+	background-image: url("../images/cyber-security-2851201_1920.jpg");
+	background-size: cover;
+}
+
+div {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: white;
+	border-radius: 20px;
+	opacity: 0.8;
+}
+
+h1 {	
+	padding-top: 25px;
+	padding-right: 100px;
+	padding-left: 100px;
+	padding-bottom: 200px;
+}
