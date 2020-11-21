@@ -8,9 +8,10 @@ app which communicates with the IBM XFE API
 `yum -y update`
 `yum -y install inotify-tools incron nginx screen python3`
 `pip3 install requests`
+`pip3 install pipenv`
 `mkdir /tmp/upload`
 `echo "root" > /etc/incron.allow`
-`echo -e "/tmp/upload\tIN_CLOSE_WRITE\tcurl -s -X POST -d \"file=\$@/\$#\" http://localhost:8000" > /etc/incron.d/upload`
+`echo -e "/tmp/upload\tIN_CLOSE_WRITE\tcurl -s -X POST -d \"file=\$#&path=\$@/\" http://localhost:8000" > /etc/incron.d/upload`
 `systemctl enable incrond.service`
 `systemctl start incrond.service`
 `firewall-cmd --zone=public --add-port=80/tcp --permanent`

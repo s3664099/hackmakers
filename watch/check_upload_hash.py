@@ -15,11 +15,14 @@ class FileEventHandler(BaseHTTPRequestHandler):
         content_length = int(self.headers['Content-Length'])
         post_body = self.rfile.read(content_length)
         post = parse_qs(post_body.decode('utf-8'))
-        filepath = post['file'][0]
+        filename = post['file'][0]
+        source_ip = filename.split("_")[0]
+        filepath = post['path'][0] + filename
         file_hash = self.generate_file_hash(filepath=filepath)
+        ip_valid = self.validate_ip(source_ip)
         file_valid = self.validate_file_hash(file_hash=file_hash)
 
-        if not file_valid:
+        if not file_valid or not ip_valid:
             os.unlink(filepath)
 
         return
@@ -43,6 +46,22 @@ class FileEventHandler(BaseHTTPRequestHandler):
         r = requests.get('https://api.xforce.ibmcloud.com/malware/' + file_hash, headers=headers)
         if r.status_code == 200:
             return False
+
+        return True
+
+    @staticmethod
+    def validate_ip(ip: str) -> bool:
+        credentials = os.getenv("XFE_API_KEY", "") + ":" + os.getenv("XFE_API_PASSWORD", "")
+        headers = {
+            "Authorization": "Basic " + base64.b64encode(credentials.encode('utf-8')).decode('utf-8')
+        }
+        r = requests.get('https://api.xforce.ibmcloud.com/ipr/history/' + ip, headers=headers)
+        if r.status_code == 200:
+            history = r.json()['history']
+
+            for entry in history:
+                if entry['score'] > 2:
+                    return False
 
         return True
 
