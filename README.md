@@ -6,6 +6,8 @@ It utilises incron (inotify) to watch for file upload events and to reach out to
 IBM's X-Force Exchange API to retrieve threat intelligence based on the uploader's
 IP address and the uploaded file's SHA256 hash.
 
+If the file is considered a threat, is is removed within milliseconds after the upload completes.
+
 ## Prerequisites:
 
 The POC was tested using an instance in the Oracle Cloud Infrastructure. The watcher
