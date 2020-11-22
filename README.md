@@ -43,6 +43,4 @@ One area in which this product can be expanded is to provide data back into X-Fo
 
 A second expansion would include monitoring TOR exit points and known IP addresses associated with commercial VPN providers. It is anticipated that these IP addresses would more likely than not be used by attackers, and in this instance any uploads coming from these addresses can be blocked.
 
-Another expansion could relate to file type monitoring. This way unauthorised files can be prevented from being injected into a pipeline. For instance, if a pipeline only allows pdf files, then any files that aren't in a pdf format can be blocked.
-
-Other way round the traffic can be blocked if something is being advertised and making it to the DMZ.
+Another expansion could relate to file type monitoring. This way unauthorised file types can be prevented from being injected into the servers. For instance, if a ruleset only allows PDF files, then any files that aren't in a PDF format can be blocked.
