@@ -1,0 +1,17 @@
+<html>
+  <head>
+    <title>Hackmaker File Uploader</title>
+    <meta charset="utf-8">
+    <link type="text/css" rel="stylesheet" href="css/stylesheet.css">
+  </head>
+  <body>
+  	<div>
+	  <h1>Hackmakers</h1>
+	  <form enctype = "multipart/form-data" action = "cgi-bin/save_file.py" method = "post">
+	  	<input type="file" name="filename" multiple>
+	  	<input class="submit" type="submit" value="Upload">
+	  </form>
+	  <progress value="100" max="100"></progress>
+	</div>
+  </body>	
+</html>
