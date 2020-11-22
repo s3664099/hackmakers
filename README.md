@@ -36,3 +36,11 @@ on port 8000. It is called via `cURL` commands by `incron`.
 `incron` is configured to listen to `IN_CLOSE_WRITE` events in the temporary folder,
 and when they occur, it asynchronously validates the source IP and the file content hash
 against IBM X-Force Exchange's database.
+
+# Future Expansion
+
+One area in which this product can be expanded is to provide data back into X-Force Exchange, where if our product detects malicious IP addresses or files that are not present on the database, we can pass the information along so that the community is better advised.
+
+A second expansion would include monitoring TOR exit points and known IP addresses associated with commercial VPN providers. It is anticipated that these IP addresses would more likely than not be used by attackers, and in this instance any uploads coming from these addresses can be blocked.
+
+Another expansion could relate to file type monitoring. This way unauthorised files can be prevented from being injected into a pipeline. For instance, if a pipeline only allows pdf files, then any files that aren't in a pdf format can be blocked.
