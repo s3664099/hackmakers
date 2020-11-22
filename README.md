@@ -15,6 +15,8 @@ folder contains a startup script fragment which preinstalls and preconfigures th
 required services. The application's files were deployed manually, and the POC's server
 side scripts also need to be started manually.
 
+It also requires access to IBM X-Force Exchange using an API key - password pair.
+
 ## Components:
 
 ### Uploader
