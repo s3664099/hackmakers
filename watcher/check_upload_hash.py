@@ -27,7 +27,7 @@ class FileEventHandler(BaseHTTPRequestHandler):
         if not file_valid or not ip_valid:
             os.unlink(filepath)
         else:
-            os.rename(filepath, post['path'][0] + original_filename)
+            os.rename(filepath, '/tmp/final/' + original_filename)
 
         return
 
