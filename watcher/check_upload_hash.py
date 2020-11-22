@@ -16,7 +16,9 @@ class FileEventHandler(BaseHTTPRequestHandler):
         post_body = self.rfile.read(content_length)
         post = parse_qs(post_body.decode('utf-8'))
         filename = post['file'][0]
-        source_ip = filename.split("_")[0]
+        filename_fragments = filename.split("_")
+        source_ip = filename_fragments[0]
+        original_filename = "_".join(filename_fragments[1:])
         filepath = post['path'][0] + filename
         file_hash = self.generate_file_hash(filepath=filepath)
         ip_valid = self.validate_ip(source_ip)
@@ -24,6 +26,8 @@ class FileEventHandler(BaseHTTPRequestHandler):
 
         if not file_valid or not ip_valid:
             os.unlink(filepath)
+        else:
+            os.rename(filepath, post['path'][0] + original_filename)
 
         return
 
