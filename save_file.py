@@ -7,27 +7,23 @@ import cgitb
 cgitb.enable(format="text")
 
 form = cgi.FieldStorage()
-
 # Get filename here
-file_list = form['filename']
-message = ""
+file_item = form['filename']
 
-for file_item in file_list:
-	if file_item.filename:
+client_ip = os.getenv("HTTP_X_FORWARDED_FOR")
 
-		# strip leading path from file name to avoid
-		# directory traversal attacks
+if file_item.filename:
 
-		fn = os.path.basename(file_item.filename.replace("\\", "/"))
-		open('/tmp/upload/' + fn, 'wb').write(file_item.file.read())
-		message += '<p>The file "'+fn+'" was uploaded successfully</p>'
-	else:
-		message = '<p>No file was uploaded</p>'
+	# strip leading path from file name to avoid
+	# directory traversal attacks
 
-print ("Content-Type: text/html")
-print ("")
-print ("<html>")
-print ("<body>")
-print (message)
-print ("</body>")
-print ("</html>")
+	fn = client_ip + "_" + os.path.basename(file_item.filename.replace("\\", "/"))
+	open('/tmp/upload/' + fn, 'wb').write(file_item.file.read())
+	print('Status: 301 Redirect')
+	print('Location: /uploader/success.html')
+else:
+	print('Status: 301 Redirect')
+	print('Location: /uploader/failure.html')
+
+print("Content-Type: text/html\n\n")
+print("Moved permanently")
